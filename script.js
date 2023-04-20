@@ -3,21 +3,26 @@ getSumBtn.append("Get Total Price");
 document.body.appendChild(getSumBtn);
 
 const getSum = () => {
-  const prices = document.querySelectorAll(".prices");
+  getSumBtn.disabled = true;
+  const prices = document.querySelectorAll(".price");
   let totalPrice = 0;
-
-  prices.forEach(price => {
-    totalPrice += parseInt(price.innerText);
+  prices.forEach((price) => {
+    const value = parseInt(price.textContent);
+    if (!Number.isNaN(value)) {
+      totalPrice += value;
+    }
   });
-
-  const newRow = document.createElement("tr");
-  const totalCell = document.createElement("td");
-  totalCell.innerText = "Total Price:";
-  const priceCell = document.createElement("td");
-  priceCell.innerText = totalPrice;
-  newRow.appendChild(totalCell);
-  newRow.appendChild(priceCell);
-  document.querySelector("table").appendChild(newRow);
+  const totalPriceRow = document.createElement("tr");
+  totalPriceRow.id = "ans";
+  const totalPriceData = document.createElement("td");
+  const totalPriceAns = document.createElement("td");
+  totalPriceRow.appendChild(totalPriceData);
+  totalPriceRow.appendChild(totalPriceAns);
+  const data = `Total Price (in Rs): `;
+  totalPriceData.append(data);
+  totalPriceAns.append(`${totalPrice}`);
+  const table = document.querySelector("tbody");
+  table.appendChild(totalPriceRow);
 };
 
 getSumBtn.addEventListener("click", getSum);
